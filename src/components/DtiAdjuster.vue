@@ -65,7 +65,7 @@
 </template>
 
 <script>
-  const CACHE_KEY = 'TENDOPAY_IR_CORRECTOR'
+  const CACHE_KEY = 'TENDOPAY_DTI_ADJUSTER'
   const FORCE_CACHE = true
 
   export default {
