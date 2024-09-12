@@ -55,9 +55,13 @@
       <div class="my-2">
         <i>2. Add a comment to the users account (make sure to mention the previous net income):</i><br>
         <div class="bg-light rounded p-2 mt-1">
-          <code>
-            Updated Net Income from ___ to {{ netIncome }} for the user to avail their whole CL (consideration)
+          <code id="copy-area">
+            {{ comment }}
           </code>
+        </div>
+        <div class="w-25">
+          <p class="py-1"></p>
+          <button class="form-control btn btn-primary" @click="copy">{{ copied ? 'Copied!' : 'Copy' }}</button>
         </div>
       </div>
     </div>
@@ -77,7 +81,8 @@
           cl: null,
           tenure: 2
         },
-        cacheProcessed: false
+        cacheProcessed: false,
+        copied: false
       }
     },
     watch: {
@@ -99,6 +104,9 @@
       },
       netIncome() {
         return Math.ceil((this.nextPayment / (this.data.dti / 100)) * this.data.payroll / 100) * 100 || 0
+      },
+      comment() {
+        return`Updated Net Income from ___ to ${this.netIncome} for the user to avail their whole CL (consideration)`
       }
     },
     methods: {
@@ -141,6 +149,39 @@
           }
         })
         localStorage.removeItem(CACHE_KEY)
+      },
+      copy() {
+        if (!this.copied) {
+          const doc = document;
+          const text = doc.getElementById('copy-area');
+          let range;
+          let selection;
+
+          if(doc.body.createTextRange) {
+
+              range = doc.body.createTextRange();
+              range.moveToElement(text);
+              range.select();
+
+          } else if (window.getSelection) {
+
+              selection = window.getSelection();
+
+              range = doc.createRange();
+              range.selectNodeContents(text);
+
+              selection.removeAllRanges();
+              selection.addRange(range);
+
+          }
+
+          document.execCommand('copy');
+          window.getSelection().removeAllRanges();
+          this.copied = true
+          setTimeout(() => {
+            this.copied = false
+          }, 700);
+        }
       }
     }
   }
