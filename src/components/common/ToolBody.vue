@@ -30,7 +30,7 @@ export default {
     return {
       tooltip: {
         old: 'https://docs.google.com/spreadsheets/d/1DvqssBXmK2ubR652HEP5Qr1d7gC31Dy4ucT7-NO8XE4/edit?gid=0#gid=0',
-        guide: ''
+        guide: 'https://scribehow.com/shared/Allowing_users_to_use_their_remaining_CL__xNxvEkIIR4uKg0bxsHNT0A'
       }
     }
   },
