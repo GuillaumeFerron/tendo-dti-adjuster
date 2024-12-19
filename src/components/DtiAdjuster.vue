@@ -26,7 +26,7 @@
       <div class="col-12 col-lg-6">
         <div>
           <label for="next-payment">Next Payment&emsp;</label>
-          <small><i>{{ data.cl || 0 }} / ({{ data.tenure || 0 }} * 2)
+          <small><i>{{ data.cl || 0 }} / ({{ data.tenure || 0 }})
               / {{
               data.payroll || 2
               }}</i></small>
@@ -100,7 +100,7 @@
     },
     computed: {
       nextPayment () {
-        return (Math.ceil(this.data.cl / (this.data.tenure * 2) / this.data.payroll * 100) / 100) || 0
+        return (Math.ceil(this.data.cl / (this.data.tenure) / this.data.payroll * 100) / 100) || 0
       },
       netIncome() {
         return Math.ceil((this.nextPayment / (this.data.dti / 100)) * this.data.payroll / 100) * 100 || 0
