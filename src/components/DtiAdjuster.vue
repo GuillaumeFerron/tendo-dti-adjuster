@@ -79,7 +79,7 @@
           dti: 30,
           payroll: 2,
           cl: null,
-          tenure: 2
+          tenure: 3
         },
         cacheProcessed: false,
         copied: false
