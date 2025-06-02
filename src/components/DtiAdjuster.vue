@@ -25,8 +25,16 @@
       </div>
       <div class="col-12 col-lg-6">
         <div>
+          <label for="bir">BIR (%)</label>
+          <input type="number" class="form-control" step=".1" id="bir" v-model="data.bir">
+        </div>
+        <div class="mt-3">
+          <label for="current-income">Current Income (Net)</label>
+          <input type="number" class="form-control" step="1" id="current-income" v-model="data.currentIncome">
+        </div>
+        <div class="mt-3">
           <label for="next-payment">Next Payment&emsp;</label>
-          <small><i>{{ data.cl || 0 }} / ({{ data.tenure || 0 }})
+          <small><i>({{ data.cl || 0 }} * (1 + {{ data.tenure || 0 }} * {{ data.bir || 0 }}%)) / {{ data.tenure || 0 }}
               / {{
               data.payroll || 2
               }}</i></small>
@@ -79,7 +87,9 @@
           dti: 30,
           payroll: 2,
           cl: null,
-          tenure: 3
+          tenure: 3,
+          bir: 3.5,
+          currentIncome: null
         },
         cacheProcessed: false,
         copied: false
@@ -100,13 +110,13 @@
     },
     computed: {
       nextPayment () {
-        return (Math.ceil(this.data.cl / (this.data.tenure) / this.data.payroll * 100) / 100) || 0
+        return (Math.ceil((this.data.cl * (1 + this.data.tenure * this.data.bir / 100)) / (this.data.tenure) / this.data.payroll * 100) / 100) || 0
       },
       netIncome() {
         return Math.ceil((this.nextPayment / (this.data.dti / 100)) * this.data.payroll / 100) * 100 || 0
       },
       comment() {
-        return`Updated Net Income from ___ to ${this.netIncome} for the user to avail their whole CL (consideration)`
+        return`Updated Net Income from ${this.data.currentIncome || '___'} to ${this.netIncome} for the user to avail their whole CL (consideration)`
       }
     },
     methods: {
